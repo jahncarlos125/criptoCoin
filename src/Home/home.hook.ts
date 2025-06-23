@@ -6,6 +6,8 @@ type Coin = {
   name: string;
   image: string;
   current_price: number;
+  price_change_percentage_24h: number;
+  symbol: string;
 };
 
 async function fetchCoins({ pageParam = 1 }): Promise<Coin[]> {

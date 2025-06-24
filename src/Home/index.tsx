@@ -1,15 +1,17 @@
 import React from 'react';
-import { FlatList, Image, RefreshControl, Text, View, ActivityIndicator, ImageBackground } from 'react-native';
+import { FlatList, RefreshControl, Text, View, ActivityIndicator, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useCoins } from './home.hook';
-import { formatCurrency } from '../utils/formatCurrency';
-import { CaretUp, CaretDown } from 'phosphor-react-native';
-import { isPriceUp } from '../utils/isPriceUp';
+
 import { CoinItem } from './components/CoinItem';
 
 
-export function Home() {
+type Props = {
+  onSelectCoin: (id: string) => void;
+};
+
+export function Home({ onSelectCoin }: Props) {
   const {
     data,
     isLoading,
@@ -61,7 +63,7 @@ return (
             </View>
           </View>
         )}
-        renderItem={({ item, index }) => 
+        renderItem={({ item, index }) => (
           <CoinItem
             name={item.name}
             symbol={item.symbol}
@@ -69,8 +71,9 @@ return (
             image={item.image}
             changePercentage={item.price_change_percentage_24h}
             index={index}
+            onPress={() => onSelectCoin(item.id)}
           />
-      }
+        )}
       />
     </SafeAreaView>
   </ImageBackground>
